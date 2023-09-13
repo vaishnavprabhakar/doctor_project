@@ -18,12 +18,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
     password = serializers.CharField(style={'input_type': 'password'})
     confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    is_doctor = serializers.BooleanField(style={'input_type':'checkbox-class'})
+    is_doctor = serializers.BooleanField(style={'input_type':'checkbox-class'},required=False)
     class Meta:
         model = CustomUser
         fields = ['email', 'username', 'password', 'confirm_password','is_doctor']
         extra_fields = [
-            ({'input_type' : 'password'}),
+            ({'input_type' : 'password'}),  
             ({'confirm_password': {'read_only': True}}),
         ]
 

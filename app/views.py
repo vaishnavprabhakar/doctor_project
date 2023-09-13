@@ -13,11 +13,11 @@ from rest_framework.response import Response
 from .tokengenerator import get_token
 from rest_framework import status
 from django.contrib.auth import authenticate
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
-from rest_framework import filters
-from rest_framework_simplejwt.tokens import BlacklistedToken, OutstandingToken, RefreshToken
+from rest_framework import filters  # noqa: F401
+from rest_framework_simplejwt.tokens import BlacklistedToken, OutstandingToken, RefreshToken  
 
 
 class RegisterView(views.APIView):
@@ -25,8 +25,8 @@ class RegisterView(views.APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"msg": "User registered successfully... Login to get your token"}, status=status.HTTP_201_CREATED)
-        # Registration of user and doctor is completed
+            return Response({"msg": "User registered successfully... Login to get your token"}, status=status.HTTP_201_CREATED)   # Registration of user and doctor is completed
+       
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # onuulla
@@ -57,7 +57,7 @@ class LoginView(views.APIView):
 
                 tk = get_token(user)
                 return Response({"msg": "login successfull", "token": tk}, status=status.HTTP_200_OK)
-            return Response({"msg": "Doesn't exist. Or You must register new account"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"msg": "Doesn't exist. Or You must register new account"}, status=status.HTTP_204_NO_CONTENT) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -104,7 +104,7 @@ class AdminPanel(views.APIView):
             refresh_token = request.data['refresh_token']
             print(refresh_token)
             token = RefreshToken(refresh_token).blacklist()
-            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED)
+            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED)  # noqa: F401
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -131,16 +131,6 @@ class AdminPanel(views.APIView):
 
 
 
-# class CustomUserListView(generics.ListAPIView):
-#     queryset = CustomUser.objects.all()
-#     serializer_class = UserSerializer
-#     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
-#     search_fields = ['is_doctor','email']
-
-
-
-
-
 class LogoutView(generics.GenericAPIView):
 
     serializer_class = LogoutSerializer
@@ -149,11 +139,8 @@ class LogoutView(generics.GenericAPIView):
     def post(self, request):
         try:
             refresh_token = request.data['refresh_token']
-            print(refresh_token)
-            token = RefreshToken(refresh_token).blacklist()
-            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED)
+            token = RefreshToken(refresh_token).blacklist()  # noqa: F401
+            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED)  # noqa: F401
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-

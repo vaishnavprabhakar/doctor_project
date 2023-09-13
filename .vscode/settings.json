@@ -1,0 +1,11 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "editor.inlineSuggest.suppressSuggestions": true,
+    "editor.suggest.localityBonus": true,
+    "editor.suggest.preview": true,
+    "editor.suggest.selectionMode": "always",
+    "editor.inlineSuggest.showToolbar": "always",
+    "editor.quickSuggestionsDelay": 5,
+    "editor.snippetSuggestions": "top",
+    "editor.suggest.snippetsPreventQuickSuggestions": true
+}

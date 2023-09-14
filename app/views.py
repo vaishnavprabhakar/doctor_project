@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated, IsAdminUser 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
-from rest_framework import filters  # noqa: F401
+from rest_framework import filters 
 from rest_framework_simplejwt.tokens import BlacklistedToken, OutstandingToken, RefreshToken  
 
 
@@ -25,11 +25,11 @@ class RegisterView(views.APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"msg": "User registered successfully... Login to get your token"}, status=status.HTTP_201_CREATED)   # Registration of user and doctor is completed
+            return Response({"msg": "User registered successfully... Login to get your token"}, status=status.HTTP_201_CREATED) 
        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# onuulla
+
 
 class LoginView(views.APIView):
 
@@ -48,11 +48,10 @@ class LoginView(views.APIView):
 
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            email = serializer.validated_data.get('email')
-            password = serializer.validated_data.get('password')
-            # print(email, password)
+            email = serializer.validated_data['email']
+            password = serializer.validated_data['password']
             user = authenticate(email=email, password=password)
-            # print(user)
+
             if user is not None:
 
                 tk = get_token(user)
@@ -104,7 +103,7 @@ class AdminPanel(views.APIView):
             refresh_token = request.data['refresh_token']
             print(refresh_token)
             token = RefreshToken(refresh_token).blacklist()
-            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED)  # noqa: F401
+            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED) 
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -139,8 +138,9 @@ class LogoutView(generics.GenericAPIView):
     def post(self, request):
         try:
             refresh_token = request.data['refresh_token']
-            token = RefreshToken(refresh_token).blacklist()  # noqa: F401
-            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED)  # noqa: F401
+            token = RefreshToken(refresh_token).blacklist() 
+            return Response({"msg":"You're token is blacklisted."},status=status.HTTP_201_CREATED) 
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    

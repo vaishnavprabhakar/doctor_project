@@ -16,4 +16,5 @@ urlpatterns = [
     path('list/', AdminPanel.as_view(), name="profile"),   
     path('logout/', LogoutView.as_view(), name='logout-user'),   
     # path('userlist/', CustomUserListView.as_view(), name="=list-profile"),
+    
 ]

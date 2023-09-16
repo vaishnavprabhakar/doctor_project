@@ -48,8 +48,8 @@ class LoginView(views.APIView):
 
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            email = serializer.validated_data['email']
-            password = serializer.validated_data['password']
+            email = serializer.validated_data['email'] # type: ignore
+            password = serializer.validated_data['password'] #type:ignore
             user = authenticate(email=email, password=password)
 
             if user is not None:
